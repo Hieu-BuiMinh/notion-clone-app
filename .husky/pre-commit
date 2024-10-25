@@ -6,19 +6,19 @@ echo '
 '
 
 # Check Prettier standards
-# npm run check-format ||
-# (
-# npm run format && echo '
-# ===============================================================================
-# =| 🤢🤢🤮🤮
-# =| Its FOKING RAW - Your styling looks disgusting.
-# =| (╯°□°）╯︵ ┻━┻
-# =| I`ve just formated code for you, now you have to try commit again.
-# =| Next time remember to run 🚩 -- npm run format -- 🚩 before commiting you code.
-# ===============================================================================
-# ';
-# false;
-# )
+npm run check-format ||
+(
+npm run format && echo '
+===============================================================================
+=| 🤢🤢🤮🤮
+=| Its FOKING RAW - Your styling looks disgusting.
+=| (╯°□°）╯︵ ┻━┻
+=| I`ve just formated code for you, now you have to try commit again.
+=| Next time remember to run 🚩 -- npm run format -- 🚩 before commiting you code.
+===============================================================================
+';
+false;
+)
 
 # Check ESLint Standards
 npm run check-lint ||
