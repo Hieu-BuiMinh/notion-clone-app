@@ -11,7 +11,7 @@ import { api } from '@/convex/_generated/api'
 
 function DocumentsPageView() {
 	const { user } = useUser()
-	const create = useMutation(api.documents.creat)
+	const create = useMutation(api.documents.create)
 
 	const onCreate = () => {
 		const promise = create({ title: 'Untitled' })

@@ -1,13 +1,15 @@
-import { useMutation, useQuery } from 'convex/react'
-import { ChevronsLeft, MenuIcon, PlusCircle, Search, Settings } from 'lucide-react'
+import { useMutation } from 'convex/react'
+import { ChevronsLeft, MenuIcon, Plus, PlusCircle, Search, Settings, Trash } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import type { ElementRef } from 'react'
 import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
 
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { api } from '@/convex/_generated/api'
 import { useIsMobile } from '@/hooks/use-mobile'
 import { cn } from '@/lib/utils'
+import DocumentList from '@/views/main/components/document-list'
 import Item from '@/views/main/components/item'
 import UserItem from '@/views/main/components/user-item'
 
@@ -22,9 +24,7 @@ function Navigation() {
 	const [isResetting, setIsResetting] = useState(false)
 	const [isCollapsed, setIsCollapsed] = useState(false)
 
-	const documents = useQuery(api.documents.get)
-
-	const create = useMutation(api.documents.creat)
+	const create = useMutation(api.documents.create)
 
 	const handleMouseMove = (event: MouseEvent) => {
 		if (!isResizingRef.current) return
@@ -125,9 +125,16 @@ function Navigation() {
 				</div>
 
 				<div className="mt-4">
-					{documents?.map((document) => {
-						return <p key={document._id}>{document.title}</p>
-					})}
+					<DocumentList />
+					<Item onClick={onCreate} icon={Plus} label="Add a page" />
+					<Popover>
+						<PopoverTrigger className="mt-4 w-full">
+							<Item onClick={() => {}} icon={Trash} label="Trash" />
+						</PopoverTrigger>
+						<PopoverContent side={isMobile ? 'bottom' : 'right'} className="w-72 p-0">
+							<p>Trash box</p>
+						</PopoverContent>
+					</Popover>
 				</div>
 				<div
 					onMouseDown={handleMouseDown}
