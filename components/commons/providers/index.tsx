@@ -4,6 +4,7 @@ import ConvexClientProvider from '@/components/commons/providers/app-convex-prov
 import TanStaskProvider from '@/components/commons/providers/app-tanstack-provider'
 import ThemeProvider from '@/components/commons/providers/app-theme-provider'
 import { Toaster } from '@/components/ui/sonner'
+import { EdgeStoreProvider } from '@/lib/edgestore'
 
 interface IAppProvider {
 	children: React.ReactNode
@@ -11,18 +12,20 @@ interface IAppProvider {
 function AppProvider({ children }: IAppProvider) {
 	return (
 		<TanStaskProvider>
-			<ConvexClientProvider>
-				<ThemeProvider
-					attribute="class"
-					defaultTheme="light"
-					enableSystem
-					disableTransitionOnChange
-					storageKey="jotion-theme"
-				>
-					{children}
-					<Toaster position="bottom-center" />
-				</ThemeProvider>
-			</ConvexClientProvider>
+			<EdgeStoreProvider>
+				<ConvexClientProvider>
+					<ThemeProvider
+						attribute="class"
+						defaultTheme="light"
+						enableSystem
+						disableTransitionOnChange
+						storageKey="jotion-theme"
+					>
+						{children}
+						<Toaster position="bottom-center" />
+					</ThemeProvider>
+				</ConvexClientProvider>
+			</EdgeStoreProvider>
 		</TanStaskProvider>
 	)
 }

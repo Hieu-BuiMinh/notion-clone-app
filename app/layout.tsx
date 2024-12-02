@@ -17,7 +17,7 @@ const geistMono = localFont({
 })
 
 export const metadata: Metadata = {
-	title: 'Jontion',
+	title: 'Jotion',
 	description: 'The connected workspace where better, faster work happens.',
 	icons: {
 		icon: [

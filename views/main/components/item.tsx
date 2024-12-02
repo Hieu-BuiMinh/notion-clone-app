@@ -47,7 +47,7 @@ function Item({
 	const router = useRouter()
 	const { user } = useUser()
 	const create = useMutation(api.documents.create)
-	const achive = useMutation(api.documents.achive)
+	const archive = useMutation(api.documents.archive)
 	const ChevronIcon = expanded ? ChevronDown : ChevronRight
 
 	const handleExpand = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -62,7 +62,7 @@ function Item({
 			if (!expanded) {
 				onExpand?.()
 			}
-			// router.push(`/documents/${documentId}`)
+			router.push(`/documents/${documentId}`)
 		})
 		toast.promise(promise, {
 			loading: 'Creating new note...',
@@ -71,11 +71,11 @@ function Item({
 		})
 	}
 
-	const onAchive = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+	const onarchive = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
 		event.stopPropagation()
 		if (!id) return
 
-		const promise = achive({ id })
+		const promise = archive({ id })
 		toast.promise(promise, {
 			loading: 'Moving to trash...',
 			success: 'Note move to trash!',
@@ -96,7 +96,7 @@ function Item({
 			{!!id && (
 				<div
 					role="button"
-					className="mr-1 h-full hover:bg-neutral-300 dark:bg-neutral-600"
+					className="mr-1 h-full rounded hover:bg-neutral-300 dark:hover:bg-neutral-600"
 					onClick={handleExpand}
 				>
 					{<ChevronIcon className="size-4 shrink-0 text-muted-foreground/50" />}
@@ -133,7 +133,7 @@ function Item({
 							</div>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent className="w-60" align="start" side="right" forceMount>
-							<DropdownMenuItem onClick={onAchive}>
+							<DropdownMenuItem onClick={onarchive}>
 								<Trash className="mr-2 size-4" /> Delete
 							</DropdownMenuItem>
 

@@ -1,6 +1,6 @@
 import { useMutation } from 'convex/react'
 import { ChevronsLeft, MenuIcon, Plus, PlusCircle, Search, Settings, Trash } from 'lucide-react'
-import { usePathname } from 'next/navigation'
+import { useParams, usePathname } from 'next/navigation'
 import type { ElementRef } from 'react'
 import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
@@ -8,14 +8,22 @@ import { toast } from 'sonner'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { api } from '@/convex/_generated/api'
 import { useIsMobile } from '@/hooks/use-mobile'
+import { useSearch } from '@/hooks/use-search'
+import { useSettings } from '@/hooks/use-settings'
 import { cn } from '@/lib/utils'
 import DocumentList from '@/views/main/components/document-list'
 import Item from '@/views/main/components/item'
+import Navbar from '@/views/main/components/navbar'
+import TrashBox from '@/views/main/components/trash-box'
 import UserItem from '@/views/main/components/user-item'
 
 function Navigation() {
+	const params = useParams()
 	const pathname = usePathname()
 	const isMobile = useIsMobile()
+
+	const searchStore = useSearch()
+	const settingsStore = useSettings()
 
 	const isResizingRef = useRef(false)
 	const sidebarRef = useRef<ElementRef<'aside'>>(null)
@@ -119,8 +127,8 @@ function Navigation() {
 				</div>
 				<div>
 					<UserItem />
-					<Item level={0} onClick={() => {}} isSearch label="Search" icon={Search} />
-					<Item level={0} onClick={() => {}} label="Setting" icon={Settings} />
+					<Item level={0} onClick={searchStore.onOpen} isSearch label="Search" icon={Search} />
+					<Item level={0} onClick={settingsStore.onOpen} label="Setting" icon={Settings} />
 					<Item onClick={onCreate} label="New page" icon={PlusCircle} />
 				</div>
 
@@ -132,7 +140,7 @@ function Navigation() {
 							<Item onClick={() => {}} icon={Trash} label="Trash" />
 						</PopoverTrigger>
 						<PopoverContent side={isMobile ? 'bottom' : 'right'} className="w-72 p-0">
-							<p>Trash box</p>
+							<TrashBox />
 						</PopoverContent>
 					</Popover>
 				</div>
@@ -151,9 +159,13 @@ function Navigation() {
 					isMobile && 'left-0 w-full'
 				)}
 			>
-				<nav className="w-full bg-transparent px-3 py-2">
-					{isCollapsed && <MenuIcon className="size-5 text-muted-foreground" onClick={resetWidth} />}
-				</nav>
+				{!!params.documentId ? (
+					<Navbar isCollapsed={isCollapsed} onResetWidth={resetWidth} />
+				) : (
+					<nav className="w-full bg-transparent px-3 py-2">
+						{isCollapsed && <MenuIcon className="size-5 text-muted-foreground" onClick={resetWidth} />}
+					</nav>
+				)}
 			</div>
 		</>
 	)
