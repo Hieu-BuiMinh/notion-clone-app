@@ -1,6 +1,6 @@
 import { useMutation } from 'convex/react'
 import { ChevronsLeft, MenuIcon, Plus, PlusCircle, Search, Settings, Trash } from 'lucide-react'
-import { useParams, usePathname } from 'next/navigation'
+import { useParams, usePathname, useRouter } from 'next/navigation'
 import type { ElementRef } from 'react'
 import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
@@ -18,6 +18,7 @@ import TrashBox from '@/views/main/components/trash-box'
 import UserItem from '@/views/main/components/user-item'
 
 function Navigation() {
+	const router = useRouter()
 	const params = useParams()
 	const pathname = usePathname()
 	const isMobile = useIsMobile()
@@ -88,7 +89,7 @@ function Navigation() {
 	}
 
 	const onCreate = async () => {
-		const promise = create({ title: 'Untitled' })
+		const promise = create({ title: 'Untitled' }).then((documentId) => router.push(`/documents/${documentId}`))
 		toast.promise(promise, {
 			loading: 'Creating new note...',
 			success: 'New note cretated!',

@@ -10,7 +10,7 @@ import IconPicker from '@/components/commons/icon-picker'
 import { Button } from '@/components/ui/button'
 import { api } from '@/convex/_generated/api'
 import type { Doc } from '@/convex/_generated/dataModel'
-import { useConverImage } from '@/hooks/use-cover-image'
+import { useCoverImage } from '@/hooks/use-cover-image'
 
 interface IToolbar {
 	initialData: Doc<'documents'>
@@ -64,7 +64,7 @@ function Toolbar({ initialData, preview }: IToolbar) {
 		})
 	}
 
-	const coverImage = useConverImage()
+	const coverImage = useCoverImage()
 
 	return (
 		<div className="group relative pl-[54px]">

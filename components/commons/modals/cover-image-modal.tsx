@@ -8,7 +8,7 @@ import { SingleImageDropzone } from '@/components/commons/single-image-dropzone'
 import { Dialog, DialogContent, DialogHeader } from '@/components/ui/dialog'
 import { api } from '@/convex/_generated/api'
 import type { Id } from '@/convex/_generated/dataModel'
-import { useConverImage } from '@/hooks/use-cover-image'
+import { useCoverImage } from '@/hooks/use-cover-image'
 import { useEdgeStore } from '@/lib/edgestore'
 
 function CoverImageModal() {
@@ -16,7 +16,7 @@ function CoverImageModal() {
 	const update = useMutation(api.documents.update)
 	const [file, setFile] = useState<File>()
 	const [isSubmitting, setIsSubmitting] = useState(false)
-	const coverImage = useConverImage()
+	const coverImage = useCoverImage()
 	const { edgestore } = useEdgeStore()
 
 	const onClose = () => {

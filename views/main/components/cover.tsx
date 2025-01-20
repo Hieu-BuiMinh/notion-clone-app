@@ -9,7 +9,8 @@ import { Skeleton } from '@/components//ui/skeleton'
 import { Button } from '@/components/ui/button'
 import { api } from '@/convex/_generated/api'
 import type { Id } from '@/convex/_generated/dataModel'
-import { useConverImage } from '@/hooks/use-cover-image'
+import { useCoverImage } from '@/hooks/use-cover-image'
+import { useEdgeStore } from '@/lib/edgestore'
 // import { useEdgeStore } from '@/lib/edgestore'
 import { cn } from '@/lib/utils'
 
@@ -19,20 +20,23 @@ interface CoverProps {
 }
 
 export function Cover({ url, preview }: CoverProps) {
-	// const { edgestore } = useEdgeStore()
+	const { edgestore } = useEdgeStore()
 	const params = useParams()
-	const coverIamge = useConverImage()
+	const coverImage = useCoverImage()
 	const removeCoverImage = useMutation(api.documents.removeCoverImage)
 
 	const onRemove = async () => {
 		if (url) {
-			// await edgestore.publicFiles.delete({
-			// 	url: url,
-			// })
+			await edgestore.publicFiles
+				.delete({
+					url: url,
+				})
+				.then(() => {
+					removeCoverImage({
+						id: params.documentId as Id<'documents'>,
+					})
+				})
 		}
-		removeCoverImage({
-			id: params.documentId as Id<'documents'>,
-		})
 	}
 
 	return (
@@ -44,7 +48,7 @@ export function Cover({ url, preview }: CoverProps) {
 						className="text-xs text-muted-foreground"
 						variant="outline"
 						size="sm"
-						onClick={() => coverIamge.onReplace(url)}
+						onClick={() => coverImage.onReplace(url)}
 					>
 						<ImageIcon className="mr-2 size-4" />
 						Change Cover

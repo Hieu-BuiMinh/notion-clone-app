@@ -71,11 +71,11 @@ function Item({
 		})
 	}
 
-	const onarchive = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+	const onArchive = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
 		event.stopPropagation()
 		if (!id) return
 
-		const promise = archive({ id })
+		const promise = archive({ id }).then(() => router.push(`/documents`))
 		toast.promise(promise, {
 			loading: 'Moving to trash...',
 			success: 'Note move to trash!',
@@ -133,7 +133,7 @@ function Item({
 							</div>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent className="w-60" align="start" side="right" forceMount>
-							<DropdownMenuItem onClick={onarchive}>
+							<DropdownMenuItem onClick={onArchive}>
 								<Trash className="mr-2 size-4" /> Delete
 							</DropdownMenuItem>
 

@@ -105,7 +105,7 @@ const SingleImageDropzone = React.forwardRef<HTMLInputElement, InputProps>(
 		return (
 			<div className="relative">
 				{disabled && (
-					<div className="absolute inset-y-8 z-50 flex size-full items-center justify-center bg-background/90">
+					<div className="absolute inset-y-0 z-50 flex size-full items-center justify-center bg-background/80">
 						<Loader size={'lg'} />
 					</div>
 				)}
@@ -133,7 +133,7 @@ const SingleImageDropzone = React.forwardRef<HTMLInputElement, InputProps>(
 						// Upload Icon
 						<div className="flex flex-col items-center justify-center text-xs text-gray-400">
 							<UploadCloudIcon className="mb-2 size-7" />
-							<div className="text-gray-400">drag & drop to upload</div>
+							<div className="text-gray-400">Click or drag file to this area to upload</div>
 							<div className="mt-3">
 								<Button type="button" disabled={disabled}>
 									select

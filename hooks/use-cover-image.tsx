@@ -8,7 +8,7 @@ type CoverImageStore = {
 	onReplace: (url: string) => void
 }
 
-export const useConverImage = create<CoverImageStore>()((set) => ({
+export const useCoverImage = create<CoverImageStore>()((set) => ({
 	url: undefined,
 	isOpen: false,
 	onOpen: () => set({ isOpen: true, url: undefined }),
