@@ -9,6 +9,7 @@ import { api } from '@/convex/_generated/api'
 import type { Id } from '@/convex/_generated/dataModel'
 import Banner from '@/views/main/components/banner'
 import Menu from '@/views/main/components/menu'
+import Publish from '@/views/main/components/publish'
 import Title from '@/views/main/components/title'
 
 interface INavbar {
@@ -45,6 +46,7 @@ function Navbar({ isCollapsed, onResetWidth }: INavbar) {
 					<Title initalData={document} />
 
 					<div className="flex items-center gap-2">
+						<Publish initialData={document} />
 						<Menu documentId={document._id} />
 					</div>
 				</div>
